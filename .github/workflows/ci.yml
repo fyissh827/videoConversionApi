@@ -39,8 +39,7 @@ jobs:
       with:
         host: 103.160.107.22                  # Direct IP
         username: ubuntu  # Your VPS user (e.g., ubuntu)
-        key: ${{ secrets.SERVER_KEY }}        # Your SSH private key
-        script: |-----BEGIN OPENSSH PRIVATE KEY-----
+        key: |-----BEGIN OPENSSH PRIVATE KEY-----
 b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn
 NhAAAAAwEAAQAAAgEA3UdKxC1pexmenI9rGPVMOHZCGqXvJzBOJoN6sojt2UPA7n/licfq
 s9IAlkCRioXJZWoxfpq8O5xEmdl8QpLX9+epekvxQPG5mngqoXbd8xke7vfNCyw8nkxW1X
@@ -88,8 +87,8 @@ ldoU55qS18lDd02HkUYHDuLUFmggK7M9b5hQUc0IVzHW1+dPUhIIVM7R3CxniZCXkS2FfG
 2J7tBbvUo10ax0MX4417G7sSxfub9KMJGRSM5DUK2JNFq8YVZVQapuq0/sqKGumv8BE7ku
 d9mymH0KBWppjqoLuUnB1LaPQLi4BE1pc5WGo5qy+m/BW+YL5FSgpQefYQmXC8c6JdjbD0
 s9nlDxvl8U55AAAADWdpdGh1Yi1kZXBsb3kBAgMEBQ==
------END OPENSSH PRIVATE KEY-----
-
+-----END OPENSSH PRIVATE KEY-----        # Your SSH private key
+        script: 
           cd ../home/admin/domains/videoConversionApi
           git pull origin main
         #  npm install
