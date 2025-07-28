@@ -18,7 +18,7 @@ export async function startKafkaConsumer() {
   await consumer.subscribe({ topic, fromBeginning: false });
 
   console.log(`Kafka: Listening to topic '${topic}'`);
-
+//break it
   await consumer.run({
     eachMessage: async ({ message }) => {
       try {
