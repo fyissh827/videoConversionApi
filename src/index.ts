@@ -37,6 +37,11 @@ redis.on("error", (err) => {
 });
 
 // --- Start Kafka Producer & Consumer ---
+
+
+//  hiii this is harshit rajput 
+
+
 (async () => {
   try {
     await connectKafkaProducer();
