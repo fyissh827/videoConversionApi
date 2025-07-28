@@ -1,0 +1,46 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Checkout code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # 2. Set up Node.js environment
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    # 3. Install project dependencies
+    - name: Install dependencies
+      run: npm install
+
+    # 4. Run tests (customize if needed)
+    - name: Run tests
+      run: npm test
+
+    # 5. Build the project (e.g., for Vue/React)
+    - name: Build project
+      run: npm run build
+
+    # 6. Install PM2 globally
+    - name: Install PM2
+      run: npm install -g pm2
+
+    # 7. Start the app using PM2
+    - name: Start app with PM2
+      run: pm2 start npm --name "my-app" -- run start
+
+    # 8. Show PM2 status (for logs/debug)
+    - name: PM2 list
+      run: pm2 list
