@@ -13,6 +13,7 @@ exports.conversionJobHandler = void 0;
 const redisQueue_1 = require("./redisQueue");
 const convertProcessMetaData_1 = require("./convertProcessMetaData");
 const mediaConvertJob_1 = require("./mediaConvertJob");
+const folderForDashFile_1 = require("./folderCreation/folderForDashFile");
 class conversionJobHandler {
     // Private constructor prevents direct instantiation
     constructor() {
@@ -32,7 +33,10 @@ class conversionJobHandler {
                 if (obj) {
                     // set new process   
                     const data = (0, convertProcessMetaData_1.Convert)(obj);
-                    yield (0, mediaConvertJob_1.startFlexibleMediaConvertJob)(data);
+                    (0, folderForDashFile_1.creteFolderForDash)(data).then(r => {
+                        console.log(r);
+                        (0, mediaConvertJob_1.startFlexibleMediaConvertJob)(data).then(r1 => { console.log(r1); }).catch(e => console.log(e));
+                    }).catch(e => console.log(e));
                 }
             }
         });

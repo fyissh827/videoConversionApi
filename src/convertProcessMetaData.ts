@@ -4,10 +4,12 @@
      subtitles : Boolean;
  }
 interface Data {
-    name : String,
+    name : String;
+    jobId : String;
     options : Options; 
 }
 export interface MetaData {
+    jobId : String;
     fileName : String;
    drmFileName : String;
    thumbnailsFileName : String;
@@ -16,6 +18,7 @@ export interface MetaData {
 }
  export function Convert(data : Data) : MetaData{   
     return {
+        jobId : data.jobId,
         fileName: data.name,
         drmFileName: data.name,
         thumbnailsFileName: data.name,

@@ -15,32 +15,85 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # 2. Set up Node.js environment
+    # 2. Set up Node.js
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
 
-    # 3. Install project dependencies
+    # 3. Install dependencies
     - name: Install dependencies
       run: npm install
 
-    # 4. Run tests (customize if needed)
+    # 4. Run tests
     - name: Run tests
       run: npm test
 
-    # 5. Build the project (e.g., for Vue/React)
+    # 5. Build the project
     - name: Build project
       run: npm run build
 
-    # 6. Install PM2 globally
-    - name: Install PM2
-      run: npm install -g pm2
+    # 6. Deploy to VPS using SSH and run PM2 on the server
+    - name: Deploy to VPS via SSH
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: 103.160.107.22                  # Direct IP
+        username: ubuntu  # Your VPS user (e.g., ubuntu)
+        key: ${{ secrets.SERVER_KEY }}        # Your SSH private key
+        script: |-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn
+NhAAAAAwEAAQAAAgEA3UdKxC1pexmenI9rGPVMOHZCGqXvJzBOJoN6sojt2UPA7n/licfq
+s9IAlkCRioXJZWoxfpq8O5xEmdl8QpLX9+epekvxQPG5mngqoXbd8xke7vfNCyw8nkxW1X
+X9WyQMxApEJI4/lpvYel1/WcHhigl5q1T7NyKQwIWxbuYMCC2zeXiobawUwkUDcontr6JM
+kn6HT69Sl3z8hyJ6/JCTQDeXuIuxuxuGmhwNV+qrxvtHR4WiJzcozQQqHHlDLgGMmcJie1
+f/DuMNSfLwXQdfNcWZYGgmbOkgpodn5eO6yaD+U2qS/H13qyiQtViiBn2/DSAHb29nLav9
+NPXhB7xGp/lP9xAu/tW7nR3VpjYJPX3EcmgHbyuJ1rqdb69NK1s8cRTsl3QSIKCdwwDF0E
+9s4NvKtBZxRpH/NEZ7MSOCrIhRg8B1lRVWyB9MEo6R+dbDkJCkLACi9+tifkXR8novVbEU
+AUac2raiiBz1WJzO0RJeQY9JocJcF8dxY5NRpbQMqXdj2noS9Wm+RgsEJeO/adQFnZOs4X
+Pl8ANkyknB9ntvkhPObzzY6gCPht50aJjSuDy4zJNhytMqI7itP8STItofyjkgMKBcJxBp
+VciBd6tQGsIWCLMdD9LSA51PghmGDzjjpqAM3nRIMECGr2dsa59OrcjNPWksakNssU8WyH
+sAAAdInjdLd543S3cAAAAHc3NoLXJzYQAAAgEA3UdKxC1pexmenI9rGPVMOHZCGqXvJzBO
+JoN6sojt2UPA7n/licfqs9IAlkCRioXJZWoxfpq8O5xEmdl8QpLX9+epekvxQPG5mngqoX
+bd8xke7vfNCyw8nkxW1XX9WyQMxApEJI4/lpvYel1/WcHhigl5q1T7NyKQwIWxbuYMCC2z
+eXiobawUwkUDcontr6JMkn6HT69Sl3z8hyJ6/JCTQDeXuIuxuxuGmhwNV+qrxvtHR4WiJz
+cozQQqHHlDLgGMmcJie1f/DuMNSfLwXQdfNcWZYGgmbOkgpodn5eO6yaD+U2qS/H13qyiQ
+tViiBn2/DSAHb29nLav9NPXhB7xGp/lP9xAu/tW7nR3VpjYJPX3EcmgHbyuJ1rqdb69NK1
+s8cRTsl3QSIKCdwwDF0E9s4NvKtBZxRpH/NEZ7MSOCrIhRg8B1lRVWyB9MEo6R+dbDkJCk
+LACi9+tifkXR8novVbEUAUac2raiiBz1WJzO0RJeQY9JocJcF8dxY5NRpbQMqXdj2noS9W
+m+RgsEJeO/adQFnZOs4XPl8ANkyknB9ntvkhPObzzY6gCPht50aJjSuDy4zJNhytMqI7it
+P8STItofyjkgMKBcJxBpVciBd6tQGsIWCLMdD9LSA51PghmGDzjjpqAM3nRIMECGr2dsa5
+9OrcjNPWksakNssU8WyHsAAAADAQABAAACADbGchST5TuKwP+iZPF9r0t+wqhUERpTU9Um
+0NWnHbGdmwGu+UQdD9VJk8md3Ck9KviGzA+6AASFj1nCQ4c7UGjWmNZkPClGbRp2yp7DjP
+ejbUvcXY55edv5q7kVhwzrpJlWrT2bVNRUaccIpAC1BL6lz8+ArtscHFb8AUsheTMBFR9p
+pc/YPB9G9C6DRCoo8+mDlr07+ibz0pMlDuq8YycPW+hb9DgL/UrizM7JkZIlG6TxyI0Kk3
+gEouP/hIi763EYdEZyJvopbF203Jk6vO/TpT7/KRvmraVreWWn9NH6n1pI1G/aIyhkV0X8
+1cbjk8qM9io4moLswzY782N10MtIBvHCDGyHUDzv/9Wnz+UXDRcn2NEctDCH1KEDaY4vkX
+Bglp/G8CI+ZzysPDk8kve+yV5uP9iokj13PGVMy/3Qc/xNblkxryz/+lQ9D0OO0yvaXe2z
+rSxeALVGqjVOXlE6AOFBjYhl6qLHt4a9TNTQAQPRYWY/aEd+1179elLft0g+1CT97qeIne
+4t3vA/hVvZEuqM2HEfNN+cJm2wTCKrUMDH50LAaoVEjGD7g6CCIajWLhGQZGmuCKMExCEN
+AwCtIXjuNA9RmdfrisNU16b4MJnWsBZ6nCSBY17Xbfg1DxjA2KMXLtR8QYKT/gIPSlUPXq
+PLV0TPfKmJ57Z1TIGRAAABAQDZvjhzewl45uHMG52O+dnAT0zt37kicxEkoPkTCJF8VACW
+wZ9yAxrXfFaKnsniFQPaREoTMighT6FTOxZe8qzzcsvOB90eoZTx3QJ43PyJmF3cwMdgbQ
+5Ka06dozYInNOokJw79tZ+p2Nkh11J1mLNtKCvqG4nmn8GLlX39n/T+LkZhiYTQD3qROY5
+uX1CcOkjoIpbs1ZP3K8twydO9cxnFmY9UmDWvbTd2OVggqV0Qza9Zddy54HIQv1xOEsOka
+0Rrd1KNYmIJoZrns3+Tjpv5kuM8iO7iwr7sCI9rvwecQfn3f4MFV7ARZfw87HSuZK4L8zT
+dL43C0TdV2X3GGS6AAABAQDztXxvRWgiOxY2aC4kfU1EULkSXPJNqvshrrYvMaIuYsnxSP
+vXwXyfjf8D7Ifp5H34+XbRVq47xsIMy8+rHBCENv0kuXvtW+c/hZj4Ti2wsyQjAnWkMzj4
+rGNxxMzU7f8LrKmrKBis7MnOuTf5aVmyZJmqoDaRhxt84oVh9WFHST6IWVuGfyJcEYcNE+
+2SM3JCRnC/u0u0B2MRoP1UDonwaWSXweV0kc7u/vonfGYoduNi0YKQRjJPJUm6FLLBNPnq
+YxFJ71RsbeYcK5EVUEFiqMkp9F9UonGQagm8lssSiSa9KtZdLycgHLuKYqE9AHPgahqloi
+vyrCYImND26kGTAAABAQDocDUmKA2HerdILcU1AvQDMoR471IwbVUSb76xAEIpt0TcTCIY
+YRisaOPjNTG5Tk+DD+YHKaqeisk2nDMS6iR1kMEA+CnBm98iybzuHsya21AcPdbXumaTss
+ldoU55qS18lDd02HkUYHDuLUFmggK7M9b5hQUc0IVzHW1+dPUhIIVM7R3CxniZCXkS2FfG
+2J7tBbvUo10ax0MX4417G7sSxfub9KMJGRSM5DUK2JNFq8YVZVQapuq0/sqKGumv8BE7ku
+d9mymH0KBWppjqoLuUnB1LaPQLi4BE1pc5WGo5qy+m/BW+YL5FSgpQefYQmXC8c6JdjbD0
+s9nlDxvl8U55AAAADWdpdGh1Yi1kZXBsb3kBAgMEBQ==
+-----END OPENSSH PRIVATE KEY-----
 
-    # 7. Start the app using PM2
-    - name: Start app with PM2
-      run: pm2 start npm --name "my-app" -- run start
-
-    # 8. Show PM2 status (for logs/debug)
-    - name: PM2 list
-      run: pm2 list
+          cd ../home/admin/domains/videoConversionApi
+          git pull origin main
+        #  npm install
+        #  npm run build
+        #  pm2 restart my-app || pm2 start npm --name "my-app" -- run start
+        #  pm2 save
+         # pm2 list

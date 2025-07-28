@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Convert = Convert;
 function Convert(data) {
     return {
+        jobId: data.jobId,
         fileName: data.name,
         drmFileName: data.name,
         thumbnailsFileName: data.name,
